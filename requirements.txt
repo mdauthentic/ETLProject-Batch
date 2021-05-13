@@ -1,0 +1,5 @@
+feedparser
+urllib3
+BeautifulSoup
+tldextract
+requests
