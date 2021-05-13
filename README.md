@@ -4,7 +4,7 @@
 
 ## Architecture diagram
 
-![Project Architecture](resources/architecture.jpg)
+![Project Architecture](resources/data-archi.jpg)
 
 ## Extraction
 
@@ -29,3 +29,8 @@ Initially extracted data is pre-processed. Since the websites have different fie
 ## Loading
 
 > Data Model
+
+## Tech Stack
+
+- `Python3`
+- `Prefect`
