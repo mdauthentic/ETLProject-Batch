@@ -13,15 +13,15 @@ class GoogleDriveAPI:
         return GoogleDrive(gauth)
 
     def create_folder(self, parent_folder_id: str, subfolder_name: str):
-        newFolder = self.drive.CreateFile(
+        new_folder = self.drive.CreateFile(
             {
                 "title": subfolder_name,
                 "parents": [{"kind": "drive#fileLink", "id": parent_folder_id}],
                 "mimeType": "application/vnd.google-apps.folder",
             }
         )
-        newFolder.Upload()
-        return newFolder
+        new_folder.Upload()
+        return new_folder
 
     def upload_file(self, dir: str):
         basepath = Path(dir)
