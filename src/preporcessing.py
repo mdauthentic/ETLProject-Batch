@@ -50,28 +50,25 @@ class DataPreprocess:
 
     def preprocess_remotive_jobs(self, dir: str) -> List[Dict[str, Any]]:
         json_data: List[Dict[str, Any]] = read_json(dir)
-        job_details = []
-
         logging.debug("Processing job data from remotive.io....")
-        for i in range(len(json_data)):
-            job_details.append(
-                {
-                    "title": json_data[i].get("title"),
-                    "company": json_data[i]["authors"][0].get(
-                        "company_name", self.__default_value
-                    ),
-                    "description": json_data[i].get("description"),
-                    "job_type": json_data[i].get("job_type"),
-                    "url": json_data[i].get("link"),
-                    "tags": self.__default_value,
-                    "publication_date": json_data[i].get("publication_date"),
-                    "salary": json_data[i].get("salary", self.__default_value),
-                    "location": json_data[i].get(
-                        "candidate_required_location", "Remote"
-                    ),
-                }
-            )
-        return job_details
+        return [
+            {
+                "title": json_datum.get("title"),
+                "company": json_datum["authors"][0].get(
+                    "company_name", self.__default_value
+                ),
+                "description": json_datum.get("description"),
+                "job_type": json_datum.get("job_type"),
+                "url": json_datum.get("link"),
+                "tags": self.__default_value,
+                "publication_date": json_datum.get("publication_date"),
+                "salary": json_datum.get("salary", self.__default_value),
+                "location": json_datum.get(
+                    "candidate_required_location", "Remote"
+                ),
+            }
+            for json_datum in json_data
+        ]
 
     def preprocess_adzuna_jobs(self, dir: str) -> List[Dict[str, Any]]:
         json_data: List[Dict[str, Any]] = read_json(dir)
