@@ -27,15 +27,15 @@ class DataTransformer:
     """Todo: Convert all to standard format
     Use the job publication dates columns
     """
+
     def date_converter(self):
         pass
 
     def wordcount_per_post(self):
         df = self._read_from_file()
-        result = df.withColumn(
+        return df.withColumn(
             "wordCount", f.size(f.split(f.col("description"), " "))
         ).select("company", "wordCount")
-        return result
 
     def word_count(self):
         """Count the words from the data fetched per day excluding stopwords"""
@@ -44,13 +44,12 @@ class DataTransformer:
         tokenized = tokenizer.transform(df).select("company", "words_token")
         remover = StopWordsRemover(inputCol="words_token", outputCol="words_clean")
         cleaned_df = remover.transform(tokenized).select("words_clean")
-        result = (
+        return (
             cleaned_df.withColumn("word", f.explode(f.col("words_clean")))
             .groupBy("word")
             .count()
             .sort("count", ascending=False)
         )
-        return result
 
     def daily_word_count(df):
         """Creates a DataFrame with word counts.
@@ -64,11 +63,7 @@ class DataTransformer:
 
     def postgres_sink(df) -> None:
         logging.debug("Attempting to write data to database...")
-        df.write.format("jdbc")\
-            .option("url", "jdbc:postgresql:dbserver")\
-            .option("dbtable", "schema.tablename")\
-            .option("user", "username")\
-            .option("password", "password")\
-            .save()
+        df.write.format("jdbc").option("url", "jdbc:postgresql:dbserver").option(
+            "dbtable", "schema.tablename"
+        ).option("user", "username").option("password", "password").save()
         logging.info("Data written to database table")
-
