@@ -63,9 +63,7 @@ class DataPreprocess:
                 "tags": self.__default_value,
                 "publication_date": json_datum.get("publication_date"),
                 "salary": json_datum.get("salary", self.__default_value),
-                "location": json_datum.get(
-                    "candidate_required_location", "Remote"
-                ),
+                "location": json_datum.get("candidate_required_location", "Remote"),
             }
             for json_datum in json_data
         ]
