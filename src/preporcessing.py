@@ -26,24 +26,25 @@ class DataPreprocess:
         job_details = []
 
         logging.debug("Processing job data from stackoverflow.com....")
-        for i in range(len(json_data)):
+        for json_datum in json_data:
             job_details.append(
                 {
-                    "title": json_data[i].get("title"),
-                    "company": json_data[i]["authors"][0].get(
+                    "title": json_datum.get("title"),
+                    "company": json_datum["authors"][0].get(
                         "authors", self.__default_value
                     ),
                     "description": BeautifulSoup(
-                        json_data[i].get("summary"), "html.parser"
+                        json_datum.get("summary"), "html.parser"
                     ).text,
                     "job_type": self.__default_value,
-                    "url": json_data[i].get("link"),
-                    "tags": self.__get_terms(json_data[i].get("tags")),
-                    "publication_date": json_data[i].get("published"),
-                    "salary": json_data[i].get("salary", "-"),
-                    "location": json_data[i].get("location", "Remote"),
+                    "url": json_datum.get("link"),
+                    "tags": self.__get_terms(json_datum.get("tags")),
+                    "publication_date": json_datum.get("published"),
+                    "salary": json_datum.get("salary", "-"),
+                    "location": json_datum.get("location", "Remote"),
                 }
             )
+
             logging.debug("Job data processing complete")
         return job_details
 
