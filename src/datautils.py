@@ -19,8 +19,7 @@ def write_json(dir: str, source: str, data: List[Dict[str, Any]]) -> None:
 
 def read_json(dir: str) -> List[Dict[str, Any]]:
     with open(dir) as f:
-        data = json.load(f)
-        return data
+        return json.load(f)
 
 
 def delete_local_dir(trash_dir):
